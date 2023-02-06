@@ -1,0 +1,31 @@
++/
+\.0,'9[;p8['99]
+00\-import pandas as pd
+import plotly.express as pv
+import plotly.graph_objects as go
+from dash import Dash,dcc,html,Input,Output
+
+#step 1
+df=pd.read_csv(r"C:\Users\12242\python_practice\pandas_projects\household_median_income_2017.csv")
+df_new=df[['State','2017','2016','2015','2014']]
+print(df_new.head())
+#years = list(map(str, range(1980, 2014)))
+df_new['2017']=df_new['2017'].str.replace(',',  '')
+df_new['2017']=df_new['2017'].astype(int)
+
+df_new=df_new.drop(labels=0,axis=0)
+print(df_new.head())
+
+
+app = Dash(__name__)
+
+app.layout = html.Div([ html.H1('Median Income 2014-2017 by state'),
+                         dcc.Dropdown(id='year_dropdown', 
+                         option=[
+                            {'labels':'2017','value': '2017'},
+
+                         ])
+                                html.Div(dcc.Graph(id='line-plot')),
+                                ])
+
+#years
